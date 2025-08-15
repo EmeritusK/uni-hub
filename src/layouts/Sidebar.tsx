@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { Tooltip } from 'primereact/tooltip';
 import 'primeicons/primeicons.css';
+import '../styles/variables.css';
 
 interface MenuItem {
   id: string;
@@ -18,6 +20,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(['manage-table']));
+  const [isHovered, setIsHovered] = useState(false);
 
   const menuItems: MenuItem[] = [
     {
@@ -27,65 +30,45 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
       path: '/dashboard'
     },
     {
-      id: 'menu-order',
-      label: 'Menu Order',
-      icon: <i className="pi pi-bars" />,
-      path: '/menu-order'
+      id: 'inventory',
+      label: 'Inventario',
+      icon: <i className="pi pi-box" />,
+      path: '/inventory'
     },
     {
-      id: 'analytics',
-      label: 'Analytics',
-      icon: <i className="pi pi-chart-bar" />,
-      path: '/analytics'
+      id: 'reports',
+      label: 'Reportes',
+      icon: <i className="pi pi-file-pdf" />,
+      path: '/reports'
     },
     {
-      id: 'withdrawal',
-      label: 'Withdrawal',
-      icon: <i className="pi pi-coins" />,
-      path: '/withdrawal'
-    },
-    {
-      id: 'manage-table',
-      label: 'Manage Table',
-      icon: <i className="pi pi-table" />,
-      children: [
-        { id: 'booked', label: 'Booked', path: '/tables/booked', icon: <i className="pi pi-table" /> },
-        { id: 'active', label: 'Active', path: '/tables/active', icon: <i className="pi pi-table" /> },
-        { id: 'running-order', label: 'Running Order', path: '/tables/running-order', icon: <i className="pi pi-table" /> }
-      ]
-    },
-    {
-      id: 'manage-dish',
-      label: 'Manage Dish',
+        id: 'sales',
+        label: 'Ventas',
       icon: <i className="pi pi-shopping-cart" />,
-      children: [
-        { id: 'dishes', label: 'Dishes', path: '/dishes', icon: <i className="pi pi-shopping-cart" /> },
-        { id: 'categories', label: 'Categories', path: '/dishes/categories', icon: <i className="pi pi-shopping-cart" /> },
-        { id: 'ingredients', label: 'Ingredients', path: '/dishes/ingredients', icon: <i className="pi pi-shopping-cart" /> }
-      ]
+        path: '/sales'
     },
-    {
-      id: 'manage-payment',
-      label: 'Manage Payment',
-      icon: <i className="pi pi-credit-card" />,
-      children: [
-        { id: 'transactions', label: 'Transactions', path: '/payments/transactions', icon: <i className="pi pi-credit-card" /> },
-        { id: 'methods', label: 'Payment Methods', path: '/payments/methods', icon: <i className="pi pi-credit-card" /> },
-        { id: 'reports', label: 'Reports', path: '/payments/reports', icon: <i className="pi pi-credit-card" /> }
-      ]
-    }
+    // {
+    //   id: 'manage-payment',
+    //   label: 'Manage Payment',
+    //   icon: <i className="pi pi-credit-card" />,
+    //   children: [
+    //     { id: 'transactions', label: 'Transactions', path: '/payments/transactions', icon: <i className="pi pi-credit-card" /> },
+    //     { id: 'methods', label: 'Payment Methods', path: '/payments/methods', icon: <i className="pi pi-credit-card" /> },
+    //     { id: 'reports', label: 'Reports', path: '/payments/reports', icon: <i className="pi pi-credit-card" /> }
+    //   ]
+    // }
   ];
 
   const utilityItems: MenuItem[] = [
     {
       id: 'settings',
-      label: 'Settings',
+      label: 'Configuración',
       icon: <i className="pi pi-cog" />,
       path: '/settings'
     },
     {
       id: 'logout',
-      label: 'Logout',
+      label: 'Cerrar sesión',
       icon: <i className="pi pi-sign-out" />,
       path: '/logout'
     }
@@ -103,16 +86,22 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
 
   const isActive = (path?: string) => {
     if (!path) return false;
-    return location.pathname === path || location.pathname.startsWith(path + '/');
+    const isPathActive = location.pathname === path || location.pathname.startsWith(path + '/');
+    console.log(`Checking if ${path} is active:`, isPathActive, 'Current path:', location.pathname);
+    return isPathActive;
   };
 
   const handleItemClick = (item: MenuItem) => {
+    console.log('Clicking item:', item);
+    console.log('Current location before navigation:', location.pathname);
     if (item.path) {
       if (item.path === '/logout') {
         console.log('Logging out...');
         navigate('/login');
       } else {
+        console.log('Navigating to:', item.path);
         navigate(item.path);
+        console.log('Navigation called, new location should be:', item.path);
       }
     }
   };
@@ -126,14 +115,36 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
       <div key={item.id}>
         <div
           className={`
-            flex items-center justify-between px-4 py-3 cursor-pointer transition-all duration-200
-            ${level === 0 ? 'mx-2 mb-1' : 'ml-6 mr-2 mb-1'}
+            sidebar-menu-item sidebar-menu-container flex items-center justify-between cursor-pointer
+            ${level === 0 ? 'mx-1 mb-0.5' : 'ml-3 mr-1 mb-0.5'}
             ${isItemActive 
-              ? 'bg-blue-600 text-white rounded-lg shadow-md' 
-              : 'text-gray-700 hover:bg-gray-100 rounded-lg'
+              ? 'rounded-md shadow-sm' 
+              : 'rounded-md hover:bg-opacity-10'
             }
-            ${isCollapsed ? 'justify-center' : ''}
+            ${isCollapsed || !isHovered ? 'justify-center' : ''}
+            ${isHovered ? 'expanded' : 'collapsed'}
           `}
+          style={{
+            backgroundColor: isItemActive ? 'var(--menu-active-bg)' : 'transparent',
+            color: isItemActive ? 'var(--menu-active-text)' : 'var(--menu-text)',
+            boxShadow: isItemActive ? 'var(--menu-active-shadow)' : 'none',
+            padding: '0.375rem 0.75rem',
+            height: '2.25rem',
+            minHeight: '2.25rem',
+            maxHeight: '2.25rem'
+          }}
+          onMouseEnter={(e) => {
+            if (!isItemActive) {
+              e.currentTarget.style.backgroundColor = 'var(--menu-hover-bg)';
+              e.currentTarget.style.color = 'var(--menu-text)';
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (!isItemActive) {
+              e.currentTarget.style.backgroundColor = 'transparent';
+              e.currentTarget.style.color = 'var(--menu-text)';
+            }
+          }}
           onClick={() => {
             if (hasChildren) {
               toggleSection(item.id);
@@ -142,25 +153,48 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
             }
           }}
         >
-          <div className={`flex items-center ${isCollapsed ? 'justify-center' : ''}`}>
-            <span className={`${isItemActive ? 'text-white' : 'text-gray-600'}`}>
+          <div className={`sidebar-content flex items-center ${isCollapsed || !isHovered ? 'justify-center' : ''}`}>
+            {(isCollapsed || !isHovered) ? (
+              <>
+                <Tooltip target={`.menu-tooltip-${item.id}`} position="right" />
+                <div className={`menu-tooltip-${item.id}`} data-pr-tooltip={item.label}>
+                  <span 
+                    className="sidebar-icon text-base"
+                    style={{ color: isItemActive ? 'var(--menu-active-text)' : 'var(--menu-text)' }}
+                  >
+                    {item.icon}
+                  </span>
+                </div>
+              </>
+            ) : (
+              <>
+                <span 
+                  className="sidebar-icon text-base"
+                  style={{ color: isItemActive ? 'var(--menu-active-text)' : 'var(--menu-text)' }}
+                >
               {item.icon}
             </span>
-            {!isCollapsed && (
-              <span className={`ml-3 font-medium ${isItemActive ? 'text-white' : 'text-gray-700'}`}>
+                <span 
+                  className="sidebar-text ml-1.5 text-xs font-medium" 
+                  style={{ color: isItemActive ? 'var(--menu-active-text)' : 'var(--menu-text)' }}
+                >
                 {item.label}
               </span>
+              </>
             )}
           </div>
-          {!isCollapsed && hasChildren && (
-            <span className={`${isItemActive ? 'text-white' : 'text-gray-500'}`}>
+          {!isCollapsed && isHovered && hasChildren && (
+            <span 
+              className="text-xs"
+              style={{ color: isItemActive ? 'var(--menu-active-text)' : 'var(--menu-text)' }}
+            >
               {isExpanded ? <i className="pi pi-chevron-down" /> : <i className="pi pi-chevron-right" />}
             </span>
           )}
         </div>
         
-        {hasChildren && isExpanded && !isCollapsed && (
-          <div className="transition-all duration-200">
+        {hasChildren && isExpanded && !isCollapsed && isHovered && (
+          <div className="sidebar-menu-item expanded">
             {item.children!.map(child => renderMenuItem(child, level + 1))}
           </div>
         )}
@@ -171,43 +205,54 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
   return (
     <div 
       className={`
-        sidebar bg-white h-screen shadow-lg transition-all duration-300 ease-in-out
-        ${isCollapsed ? 'w-16' : 'w-64'}
-        border-r border-gray-200
+        sidebar h-screen shadow-lg
+        ${isCollapsed ? 'w-16' : isHovered ? 'w-56' : 'w-16'}
       `}
       style={{
-        backgroundColor: 'white',
-        borderRight: '1px solid #e5e7eb',
-        boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-        minWidth: isCollapsed ? '64px' : '256px',
-        width: isCollapsed ? '64px' : '256px'
+        backgroundColor: 'var(--sidebar-bg)',
+        borderRight: '1px solid var(--sidebar-border)',
+        boxShadow: 'var(--sidebar-shadow)',
+        minWidth: isCollapsed ? '64px' : isHovered ? '224px' : '64px',
+        width: isCollapsed ? '64px' : isHovered ? '224px' : '64px'
       }}
+      onMouseEnter={() => !isCollapsed && setIsHovered(true)}
+      onMouseLeave={() => !isCollapsed && setIsHovered(false)}
     >
       {/* Header/Branding */}
-      <div className="p-4 border-b border-gray-200">
-        <div className={`flex items-center ${isCollapsed ? 'justify-center' : ''}`}>
-          <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center">
-            <span className="text-white font-bold text-lg">P</span>
+      <div className={`sidebar-header py-1.5 px-1.5 ${isHovered ? 'expanded' : ''}`} style={{ borderBottom: '1px solid var(--border-light)' }}>
+        <div className={`flex items-center ${isCollapsed || !isHovered ? 'justify-center' : ''}`}>
+          {(isCollapsed || !isHovered) ? (
+            <>
+              <Tooltip target=".brand-tooltip" position="right" />
+              <div className="brand-tooltip" data-pr-tooltip="UniHub ASO Manager">
+                <div className="w-6 h-6 rounded-full flex items-center justify-center brand-icon" style={{ backgroundColor: 'var(--header-brand-bg)' }}>
+                  <span className="font-bold text-sm" style={{ color: 'var(--menu-active-text)' }}>U</span>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="w-6 h-6 rounded-full flex items-center justify-center brand-icon" style={{ backgroundColor: 'var(--header-brand-bg)' }}>
+                <span className="font-bold text-sm" style={{ color: 'var(--menu-active-text)' }}>U</span>
           </div>
-          {!isCollapsed && (
-            <div className="ml-3">
-              <h1 className="text-xl font-bold text-gray-800">Pospay</h1>
-              <p className="text-sm text-gray-500">Cashier Daily Assistant</p>
+              <div className="ml-1.5">
+                <h1 className="text-base font-bold" style={{ color: 'var(--header-title)' }}>UniHub</h1>
             </div>
+            </>
           )}
         </div>
       </div>
 
       {/* Navigation Menu */}
-      <div className="flex-1 py-4 overflow-y-auto">
-        <nav className="space-y-1">
+      <div className="flex-1 py-1 overflow-y-auto">
+        <nav className="space-y-0.5">
           {menuItems.map(item => renderMenuItem(item))}
         </nav>
       </div>
 
       {/* Utility Links */}
-      <div className="border-t border-gray-200 pt-4 pb-6">
-        <nav className="space-y-1">
+      <div className="pt-1.5 pb-2" style={{ borderTop: '1px solid var(--border-light)' }}>
+        <nav className="space-y-0.5">
           {utilityItems.map(item => renderMenuItem(item))}
         </nav>
       </div>

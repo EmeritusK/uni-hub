@@ -1,0 +1,278 @@
+:root {
+  /* Colores del sidebar */
+  --sidebar-bg: #ffffff;
+  --sidebar-border: #e5e7eb;
+  --sidebar-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  
+  /* Colores del menú */
+  --menu-text: #374151;
+  --menu-text-hover: #1f2937;
+  --menu-hover-bg: #f3f4f6;
+  
+  /* Colores activos */
+  --menu-active-bg: #102B0D;
+  --menu-active-text: #ffffff;
+  --menu-active-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.1);
+  
+  /* Colores del header */
+  --header-brand-bg: #1f2937;
+  --header-title: #1f2937;
+  --header-subtitle: #6b7280;
+  
+  /* Colores de bordes */
+  --border-light: #e5e7eb;
+  --border-medium: #d1d5db;
+  
+  /* Animaciones */
+  --transition-fast: 0.1s ease-out;
+  --transition-normal: 0.15s ease-out;
+  --transition-slow: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --sidebar-expand-timing: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Modo oscuro (opcional) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --sidebar-bg: #ffffff;
+    --sidebar-border: #c6d5c4;
+    --sidebar-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    
+    --menu-text: #102B0D;
+    --menu-text-hover: #102B0D;
+    --menu-hover-bg: #e8f5e8;
+    
+    --menu-active-bg: #102B0D;
+    --menu-active-text: #ffffff;
+    --menu-active-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2);
+    
+    --header-brand-bg: #111827;
+    --header-title: #102B0D;
+    --header-subtitle: #9ca3af;
+    
+    --border-light: #e5e7eb;
+    --border-medium: #4b5563;
+  }
+}
+
+/* Animaciones del sidebar */
+.sidebar {
+  transition: width var(--sidebar-expand-timing), 
+              min-width var(--sidebar-expand-timing),
+              box-shadow var(--transition-normal);
+  will-change: width, min-width;
+}
+
+.sidebar * {
+  transition: none;
+}
+
+.sidebar-menu-item {
+  transition: background-color var(--transition-fast), 
+              color var(--transition-fast),
+              box-shadow var(--transition-fast);
+  transform-origin: left center;
+  height: 2.25rem !important;
+  min-height: 2.25rem !important;
+  max-height: 2.25rem !important;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-menu-item.expanded {
+  animation: none;
+}
+
+.sidebar-menu-item.collapsed {
+  animation: none;
+}
+
+/* Transición suave para el texto del menú */
+.sidebar-text {
+  transition: opacity var(--transition-normal), 
+              transform var(--transition-normal),
+              margin-left var(--transition-normal),
+              max-width var(--transition-normal);
+  opacity: 1;
+  transform: translateX(0);
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 160px;
+}
+
+.sidebar-text.animate-in {
+  animation: textSlideIn var(--transition-normal) ease-out;
+}
+
+.sidebar-text.animate-out {
+  animation: textSlideOut var(--transition-normal) ease-out;
+}
+
+/* Transición imperceptible para el contenido */
+.sidebar-content {
+  transition: all var(--transition-normal);
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.sidebar-content.transitioning {
+  transition: all var(--transition-normal);
+}
+
+/* Asegurar que el contenedor mantenga su altura */
+.sidebar-menu-container {
+  height: 2.25rem;
+  min-height: 2.25rem;
+  max-height: 2.25rem;
+  overflow: hidden;
+}
+
+@keyframes textSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-15px);
+    max-width: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    max-width: 160px;
+  }
+}
+
+@keyframes textSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+    max-width: 160px;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-15px);
+    max-width: 0;
+  }
+}
+
+.sidebar-text.hidden {
+  opacity: 0;
+  transform: translateX(-10px);
+  margin-left: 0;
+}
+
+.sidebar-icon {
+  transition: transform var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.sidebar-icon:hover {
+  transform: scale(1.05);
+}
+
+/* Animaciones de entrada y salida */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+}
+
+/* Animación del header */
+.sidebar-header {
+  transition: all var(--transition-normal);
+}
+
+.sidebar-header.expanded {
+  animation: headerExpand var(--transition-slow) ease-out;
+}
+
+.sidebar-header .brand-icon {
+  transition: transform var(--transition-normal);
+}
+
+.sidebar-header.expanded .brand-icon {
+  animation: iconScale var(--transition-slow) ease-out;
+}
+
+@keyframes headerExpand {
+  from {
+    opacity: 0.8;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes iconScale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Animación de los tooltips */
+.tooltip-enter {
+  animation: tooltipFadeIn var(--transition-fast) ease-out;
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animación de fade para contenido */
+.fade-enter {
+  animation: fadeIn var(--transition-normal) ease-out;
+}
+
+.fade-exit {
+  animation: fadeOut var(--transition-normal) ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}

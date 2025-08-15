@@ -37,31 +37,31 @@ const MainLayout: React.FC = () => {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top Header */}
-        <header className="bg-white shadow-sm border-b border-gray-200 px-4 py-3">
+        <header className="bg-white shadow-sm border-b border-gray-200 px-3 py-2">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2">
               <button
                 onClick={toggleMobileMenu}
-                className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                className="md:hidden p-1.5 rounded-md hover:bg-gray-100 transition-colors"
               >
-                <i className="pi pi-bars" />
+                <i className="pi pi-bars text-sm" />
               </button>
               <button
                 onClick={toggleSidebar}
-                className="hidden md:block p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                className="hidden md:block p-1.5 rounded-md hover:bg-gray-100 transition-colors"
               >
-                <i className="pi pi-bars" />
+                <i className="pi pi-bars text-sm" />
               </button>
-              <h1 className="text-lg font-semibold text-gray-800">Dashboard</h1>
+              <h1 className="text-base font-semibold text-gray-800">Dashboard</h1>
             </div>
             
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2">
               {/* User Profile */}
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                  <span className="text-white font-medium text-sm">U</span>
+                <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
+                  <span className="text-white font-medium text-xs">U</span>
                 </div>
-                <span className="hidden sm:block text-sm font-medium text-gray-700">
+                <span className="hidden sm:block text-xs font-medium text-gray-700">
                   Usuario
                 </span>
               </div>
@@ -70,7 +70,7 @@ const MainLayout: React.FC = () => {
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-auto p-6">
+        <main className="flex-1 overflow-auto p-4">
           <Outlet />
         </main>
       </div>

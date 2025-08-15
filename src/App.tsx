@@ -7,6 +7,8 @@ import './prime-theme.css';
 import 'primeicons/primeicons.css';
 
 function App() {
+  console.log('App component rendered');
+  
   return (
     <Router>
       <Routes>
@@ -17,14 +19,22 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="menu-order" element={
+          <Route path="inventory" element={
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Menu Order</h1>
+              <h1 className="text-3xl font-bold text-gray-900">Inventario</h1>
+              <p>Ruta: {window.location.pathname}</p>
             </div>
           } />
-          <Route path="analytics" element={
+          <Route path="reports" element={
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Analytics</h1>
+              <h1 className="text-3xl font-bold text-gray-900">Reportes</h1>
+              <p>Ruta: {window.location.pathname}</p>
+            </div>
+          } />
+          <Route path="sales" element={
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Ventas</h1>
+              <p>Ruta: {window.location.pathname}</p>
             </div>
           } />
           <Route path="withdrawal" element={
@@ -54,7 +64,7 @@ function App() {
           } />
         </Route>
 
-        {/* Catch all route */}
+        {/* Catch all route - debe estar al final */}
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </Router>
