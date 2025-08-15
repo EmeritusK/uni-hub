@@ -1,0 +1,83 @@
+/* Solo cambiar colores específicos de PrimeReact */
+
+:root {
+  --primary-color: #102B0D;
+  --primary-color-text: #ffffff;
+}
+
+/* Sobrescribir solo los colores del tema azul */
+.p-button.p-button-primary {
+  background-color: #102B0D !important;
+  border-color: #102B0D !important;
+}
+
+.p-button.p-button-primary:hover {
+  background-color: #256125 !important;
+  border-color: #256125 !important;
+}
+
+.p-calendar .p-button {
+  background-color: #102B0D !important;
+  border-color: #102B0D !important;
+}
+
+.p-calendar .p-button:hover {
+  background-color: #256125 !important;
+  border-color: #256125 !important;
+}
+
+.p-datepicker .p-datepicker-header {
+  background-color: #102B0D !important;
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-title {
+  color: #ffffff !important;
+  font-weight: bold !important;
+  font-size: 1.2em !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year,
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
+  color: #ffffff !important;
+  font-weight: bold !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-prev,
+.p-datepicker .p-datepicker-header .p-datepicker-next {
+  color: #ffffff !important;
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-prev:hover,
+.p-datepicker .p-datepicker-header .p-datepicker-next:hover {
+  background-color: #256125 !important;
+}
+
+.p-datepicker .p-datepicker-calendar .p-datepicker-today > span {
+  background-color: #f0f9f0 !important;
+  color: #102B0D !important;
+}
+
+.p-datepicker .p-datepicker-calendar .p-datepicker-today > span.p-highlight {
+  background-color: #102B0D !important;
+  color: #ffffff !important;
+}
+
+.p-datepicker .p-datepicker-calendar span.p-highlight {
+  background-color: #102B0D !important;
+  color: #ffffff !important;
+}
+
+.p-datepicker .p-datepicker-calendar span:hover {
+  background-color: #f0f9f0 !important;
+  color: #102B0D !important;
+}
+
+.p-card .p-card-title {
+  color: #102B0D !important;
+}
+
+.p-badge.p-badge-primary {
+  background-color: #102B0D !important;
+}

@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+/* Basic styles to ensure sidebar visibility */
+.sidebar {
+  background-color: white;
+  border-right: 1px solid #e5e7eb;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure proper flexbox behavior */
+.flex {
+  display: flex;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
+/* Debug styles */
+.debug-border {
+  border: 2px solid red;
+}
+
+/* PrimeIcons styles */
+.pi {
+  font-size: 1rem;
+  line-height: 1;
+}

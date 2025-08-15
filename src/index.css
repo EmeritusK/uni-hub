@@ -1,0 +1,36 @@
+@layer tailwind-base, primereact, tailwind-utilities;
+
+@layer tailwind-base {
+  @tailwind base;
+}
+
+@theme {
+  --color-primary-50: #f0f9f0;
+  --color-primary-100: #dcf2dc;
+  --color-primary-200: #bce4bc;
+  --color-primary-300: #8dd08d;
+  --color-primary-400: #5ab35a;
+  --color-primary-500: #3a9a3a;
+  --color-primary-600: #2d7a2d;
+  --color-primary-700: #256125;
+  --color-primary-800: #1f4f1f;
+  --color-primary-900: #102B0D;
+  --color-primary-950: #0a1a06;
+  
+  --color-accent-50: #f0f9f0;
+  --color-accent-100: #dcf2dc;
+  --color-accent-200: #bce4bc;
+  --color-accent-300: #8dd08d;
+  --color-accent-400: #5ab35a;
+  --color-accent-500: #3a9a3a;
+  --color-accent-600: #2d7a2d;
+  --color-accent-700: #256125;
+  --color-accent-800: #1f4f1f;
+  --color-accent-900: #102B0D;
+  --color-accent-950: #0a1a06;
+}
+
+@layer tailwind-utilities {
+  @tailwind components;
+  @tailwind utilities;
+}
