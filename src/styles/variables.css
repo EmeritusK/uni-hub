@@ -56,6 +56,11 @@
 
 /* Animaciones del sidebar */
 .sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  z-index: 50;
   transition: width var(--sidebar-expand-timing), 
               min-width var(--sidebar-expand-timing),
               box-shadow var(--transition-normal);

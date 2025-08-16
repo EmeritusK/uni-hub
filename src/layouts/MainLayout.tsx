@@ -17,7 +17,7 @@ const MainLayout: React.FC = () => {
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Desktop Sidebar */}
-      <div className="block">
+      <div className="fixed left-0 top-0 h-full z-50">
         <Sidebar isCollapsed={isSidebarCollapsed} />
       </div>
 
@@ -35,7 +35,7 @@ const MainLayout: React.FC = () => {
       )}
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden ml-16">
         {/* Top Header */}
         <header className="bg-white shadow-sm border-b border-gray-200 px-3 py-2">
           <div className="flex items-center justify-between">
