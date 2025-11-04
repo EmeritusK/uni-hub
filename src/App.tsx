@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import MainLayout from './layouts/MainLayout';
 import AuthLayout from './layouts/AuthLayout';
 import { Dashboard } from './features/dashboard';
+import { Chatbot } from './features/chatbot';
 import './App.css';
 import './prime-theme.css';
 import 'primeicons/primeicons.css';
@@ -37,6 +38,7 @@ function App() {
               <p>Ruta: {window.location.pathname}</p>
             </div>
           } />
+           <Route path="chatbot" element={<Chatbot />} />
           <Route path="withdrawal" element={
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Withdrawal</h1>

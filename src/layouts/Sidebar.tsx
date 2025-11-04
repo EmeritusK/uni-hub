@@ -47,6 +47,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
       icon: <i className="pi pi-shopping-cart" />,
         path: '/sales'
     },
+    {
+      id: 'chatbot',
+      label: 'Chatbot',
+      icon: <i className="pi pi-comments" />,
+      path: '/chatbot'
+    },
     // {
     //   id: 'manage-payment',
     //   label: 'Manage Payment',
